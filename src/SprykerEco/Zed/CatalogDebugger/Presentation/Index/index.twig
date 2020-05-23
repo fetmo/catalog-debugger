@@ -6,7 +6,7 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Catalog Debugger' } %}
         {% block widget_content %}
-            <form method="post" id="search-form" data-post-url="{{ url('/nxs-catalog-debugger/index/search') }}">
+            <form method="post" id="search-form" data-post-url="{{ url('/catalog-debugger/index/search') }}">
                 <div class="form-group">
                     <label for="search_string">Search</label>
                     <div class="input-group">
