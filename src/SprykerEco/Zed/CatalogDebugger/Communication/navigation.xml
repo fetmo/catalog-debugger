@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <catalog-debugger>
+        <label>Catalog Debugger</label>
+        <title>Catalog Debugger</title>
+        <bundle>catalog-debugger</bundle>
+        <controller>index</controller>
+        <action>index</action>
+    </catalog-debugger>
+</config>

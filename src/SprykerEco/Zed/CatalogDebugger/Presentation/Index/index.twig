@@ -1,0 +1,68 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% set widget_title = 'Catalog Debugger' %}
+{% block section_title %}{{ widget_title | trans }}{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Catalog Debugger' } %}
+        {% block widget_content %}
+            <form method="post" id="search-form" data-post-url="{{ url('/nxs-catalog-debugger/index/search') }}">
+                <div class="form-group">
+                    <label for="search_string">Search</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="search_string" name="search_string" value="">
+                        <span class="input-group-btn">
+                            <select class="form-control" id="search_channel">
+                                <option selected>Choose...</option>
+                                {% for shop in stores %}
+                                    <optgroup label="{{ shop.label }}">
+                                        {% for key, index in shop.locales %}
+                                            <option value="{{ index.index }}">{{ key|upper }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-default" name="action" value="query-result">Fetch results</button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="elastic-result">Result</label>
+                    <div class="form-control" id="elastic-result" name="elastic-result" style="height: 450px; overflow:scroll;"></div>
+                </div>
+            </form>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script>
+        var form = document.getElementById('search-form');
+
+        var postUrl = form.dataset.postUrl;
+
+        var search = form.querySelector('#search_string');
+        var store = form.querySelector('#search_channel');
+        var result = form.querySelector('#elastic-result');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var requestBody = new FormData();
+            requestBody.append("search_string", search.value);
+            requestBody.append("search_store", store.value);
+
+            var request = new XMLHttpRequest();
+            request.open('POST', postUrl, false);
+            request.send(requestBody);
+
+            var response = JSON.parse(request.response);
+            result.outerHTML = `<pre id="elastic-result" style="height: 450px; overflow:scroll;">${JSON.stringify(response, null, 2)}</pre>`;
+
+            return false;
+        }, false);
+    </script>
+{% endblock %}

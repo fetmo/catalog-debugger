@@ -1,0 +1,21 @@
+{
+  "name": "fetmo/catalog-debugger",
+  "type": "library",
+  "description": "Catalog debugger",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/catalog": "*",
+    "spryker/config": "*",
+    "spryker/kernel": "^3.0.0",
+    "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerEco\\": "src/SprykerEco/"
+    }
+  }
+}
